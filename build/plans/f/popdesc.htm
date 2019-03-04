@@ -1,0 +1,48 @@
+<!DOCTYPE html><html><body>
+<!--
+http://www.infimum.dk/HTML/JSwindows.html
+http://www.quirksmode.org/js/popup.html
+-->
+
+.<p />.<p />.<p />.<p />
+
+<input type="button" onmouseover="msgopen(sz)" value="pop 1">
+
+<br />
+<input type="button" onmouseover="msgopen2(sz)" value="pop two"
+		    onclick='alert(this+sz)'>
+
+<SCRIPT>
+sz=5;
+function msgopen(sz) {
+fenster = open("", "popDes", "scrollbar=no, menubar=yes,width=111,height=99");
+with (fenster.document) {
+  open();
+  write("<TITLE>Desc in1? Box</TITLE>");
+  write("<body onXXXClick='window.close()' style='background-color:black;color:lightyellow'>")
+  write("<H1><FONT size=3 COLOR=RED>Expand this");
+  write("<BR>pop</FONT>Desc</H1>");
+  write("<FONT onload='size=sz' onclick=';alert(sz);sz+=1;alert(sz);size=sz;alert(sz)' ondblclick='sz-=2;size=sz'>Hi There!</FONT><BR>");
+  write("</body>");
+  close();
+}	}
+
+function msgopen2(sz) {
+fenster = open("", "popDes", "scrollbar=no,width=111,height=99");
+with (fenster.document) {
+  open();
+  write("<TITLE>Desc in2 Boxes</TITLE>");
+  write("<body onXXXClick='window.close()' style='background-color:black;color:lightyellow'>")
+  write("<H1><FONT size=3 COLOR=RED>Expand this");
+  write("<BR>pop</FONT>Desc</H1>");
+  write("<FONT size="+sz+" onclick='alert(size);return 2'>Hi There!");
+  write("but different</FONT>");
+  write("</body>");
+  close();
+}	}
+</SCRIPT>
+
+</body></html>
+<!--
+ style='background-color:transparent'
+-->

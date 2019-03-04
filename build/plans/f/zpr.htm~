@@ -1,0 +1,263 @@
+<!DOCTYPE html> <html> <head>
+<baseX href="http://samples.msdn.microsoft.com/workshop/samples/svg/zoomAndPan/orgChart.html" />
+<baseX href="https://developer.mozilla.org/en-US/docs/Web/SVG/Scripting">
+<title>zoom/pan/rotate</title>
+
+<style>
+h1 { display: inline; }
+b{ color:red}
+select {
+    background-color: lightyellow;
+}
+.inp,#input,#ow,#oh,#ro,#sw,#sh,#vb,#nx,#ny,#xx,#xy {
+    -moz-appearance: textfield;
+    -webkit-appearance: textfield;
+    background-color: -moz-field;
+    background-color: lightyellow;
+    border: 1px solid darkgray;
+    box-shadow: 2px 2px 2px 0 lightgray inset;  
+    font: -moz-field;
+    font: -webkit-small-control;
+    font-size: 111%;
+    margin-top: 5px;
+    padding: 2px 3px;
+    width: 88	px;
+}
+</style>
+<script>
+function xf(x,f) { return Math.pow(x,f) }
+function x4(x) { return Math.pow(x,4) }
+function d4(x) { return Math.pow(x,.25) }
+String.prototype.reverse = function(){
+splitext = this.split("");
+revertext = splitext.reverse();
+reversed = revertext.join("");
+return reversed;
+}
+files=([".\\details\\beam_hanger.svg",".\\znf.svg",".\\snf.svg",".\\wef.svg",".\\combi.svg",".\\plumb.svg"]);
+//	files=files.split(" ");	//predicated on being space separated values
+	var leftArrow   = 37; // The numeric code for the left arrow key.
+	var upArrow     = 38;
+	var rightArrow  = 39;
+	var downArrow   = 40;
+	var tab = 9;
+	sp=speed=5;
+	var h=72; var j=74; var k=75; var l=76; var u=85;
+	var l=76; var n=78; var p=80; var b=66; var s=83;
+	var i=73; var o=79; var gf=70; var gr=82;
+	var pr=panRate     = 10; // Number of pixels to pan per key press.
+	var zr=zoomRate    = d4(1.1);
+	var svgE;
+	var vbvs={};
+
+function pz(kc) {	//	vbv == viewBoxValues
+	f=sp; if(typeof(kc)=='object') {kc=kc.keyCode; f=1;}
+	if (oel.contentDocument) {
+		theSvgDocument = oel.contentDocument;
+	} else {
+		try { theSvgDocument = oel.getSVGDocument();
+		} catch(exception){alert('oel= '+oel)} }
+	svgE= theSvgDocument.documentElement;
+	var viewBox = svgE.getAttribute('viewBox');
+	vbv = viewBox.split(' ');
+	vbv[0] = parseFloat(vbv[0]);
+	vbv[1] = parseFloat(vbv[1]);
+	vbv[2] = parseFloat(vbv[2]);
+	vbv[3] = parseFloat(vbv[3]);
+//	intext('ro');	// force rotation stability, a costly way:(
+switch (kc) {
+	case leftArrow: vbv[0] += pr*f*sp; break;
+	case rightArrow:vbv[0] -= pr*f*sp; break;
+	case upArrow:   vbv[1] += pr*f*sp; break;
+	case downArrow: vbv[1] -= pr*f*sp; break;
+	case j:			 vbv[0] += pr*f; break;
+	case k:			 vbv[0] -= pr*f; break;
+	case u:			 vbv[1] += pr*f; break;
+	case n:			 vbv[1] -= pr*f; break;
+	case gf: zr=xf(zr,  sp);pr*=sp; break;
+	case gr: zr=xf(zr,1/sp);pr/=sp; break;
+	case i: vbv[2]/=xf(zr,f);	vbv[3]/=xf(zr,f);	break;
+	case o: vbv[2]*=xf(zr,f);	vbv[3]*=xf(zr,f);	break;
+	case s: oelW/=xf(zr,f);oelH/=xf(zr,f); oel.width=oelW+'px';oel.height=oelH+'px';break;
+	case b: oelW*=xf(zr,f);oelH*=xf(zr,f); oel.width=oelW+'px';oel.height=oelH+'px';break;
+	case l: oelW+=pr*f;    oelH-=pr*f;     oel.width=oelW+'px';oel.height=oelH+'px';break;
+	case p: oelH+=pr*f;    oelW-=pr*f;     oel.width=oelW+'px';oel.height=oelH+'px';break;
+	default: return; } // switch
+	vbvs[filen]=vbv.join(' ');	// vbv with spaced values.
+	svgE.setAttribute('viewBox', vbvs[filen]);
+	oh.setAttribute('value',oelH);	ow.setAttribute('value',oelW);
+}
+
+function zoom(zoomType) {
+	intext('ro');	// force rotation stability, a costly way:(
+//alert(zoomType);
+      var viewBox = svgE.getAttribute('viewBox');
+//alert(viewBox);
+      var vbv = viewBox.split(' ');
+//alert(vbv);
+      vbv[2] = parseFloat(vbv[2]);
+      vbv[3] = parseFloat(vbv[3]);
+//alert(zoomType+" -type,rate- "+zoomRate);
+		if (zoomType == 'zoomIn') {
+         vbv[2] /= x4(zr);
+         vbv[3] /= x4(zr);
+       } else if (zoomType == 'zoomOut') {
+			vbv[2] *= x4(zr);
+			vbv[3] *= x4(zr);
+      } else alert("function zoom(zoomType) given invalid zoomType parameter.");
+      svgE.setAttribute('viewBox', vbv.join(' ')); }
+    function zoomViaMouseWheel(mouseWheelEvent) {
+      if (mouseWheelEvent.wheelDelta > 0)
+        zoom('zoomIn');
+      else
+        zoom('zoomOut');
+      /* When the mouse is over the webpage, don't let the mouse wheel scroll the entire webpage: */
+      mouseWheelEvent.cancelBubble = true;	
+      return false; }
+
+function initialize() { /* Add event listeners: */
+if (typeof filen == "undefined") {
+   filen='./details/beam_hanger.svg'; }
+	document.getElementById('filename').textContent = filen;
+//	document.getElementById('filename').textContent = filen;	//140321
+//	oel=document.getElementById('obEl');	//140321
+//alert('oel= '+oel);
+/*	filen oel svgE oelH oelW oel.getSVGDocument() theSvgDocument */
+// Not all browsers current support the getSVGDocument() method (as described in the W3C SVG spec).
+	oel=document.getElementById('obEl');
+	if (oel.contentDocument) {
+		theSvgDocument = oel.contentDocument;
+	} else {
+		try { theSvgDocument = oel.getSVGDocument();
+		} catch(exception){alert('oel= '+oel)} }
+//		svgE = document.getElementById("beam_hanger");
+//		svgE = theSvgDocument.getElementById('beam_hanger');
+    theSvgElement = theSvgDocument.documentElement;
+    svgE = theSvgDocument.documentElement;
+//	oel.data=filen;
+	oel.width =oelW=parseFloat(document.getElementById('ow').value);
+	oel.height=oelH=parseFloat(document.getElementById('oh').value);
+	oel.rot   =oelR=parseFloat(document.getElementById('ro').value);
+//	oel.height=oel.height;
+
+
+
+
+	if(filen in vbvs) {
+
+	vbv = vbvs[filen].split(' ');
+	vbv[0] = parseFloat(vbv[0]);
+	vbv[1] = parseFloat(vbv[1]);
+	vbv[2] = parseFloat(vbv[2]);
+	vbv[3] = parseFloat(vbv[3]);
+svgE.viewBox.baseVal.width =vbv[2];
+svgE.viewBox.baseVal.height=vbv[3];
+svgE.viewBox.baseVal.x     =vbv[0];
+svgE.viewBox.baseVal.y     =vbv[1];
+
+}
+
+
+//	if(filen in vbvs) {
+//		svgE.viewBox.baseVal=vbvs[filen]	}
+	intext('ro');
+//	if(filen in vbvs) { intext('ro'); }
+
+	svgE.addEventListener('keydown', pz, false);	//true);
+	svgE.addEventListener('mousewheel', zoomViaMouseWheel, false);
+}
+function fileform() { /* file list response: */
+	fs=document.getElementById('fs');
+	for(ii=0;ii<6;ii++) if(fs.options[ii].selected==true) {
+		filen=fs.options[ii].getAttribute('value'); break}
+//	alert(ii+" = "+filen);
+	oel.setAttribute('data',filen);
+	initialize(filen);
+}
+function start() {	
+	window.addEventListener('keydown', pz, true);		// let bubble.
+	window.addEventListener('mousewheel', zoomViaMouseWheel, false);	// no bubble
+}
+function intext(se) {
+	e=document.getElementById(se);
+	switch (se)
+	{	case'ow':oelW=oel.width =parseFloat(e.value);	break;
+		case'oh':oelH=oel.height=parseFloat(e.value);	break;
+		case'ro':
+			if (oel.contentDocument) {
+				theSvgDocument = oel.contentDocument;
+			} else {
+				try { theSvgDocument = oel.getSVGDocument();
+				} catch(exception){alert('oel= '+oel)} }
+				svgE= theSvgDocument.documentElement;
+				gtr=svgE.getElementById('gtr');
+				oelR=oel.rot=parseFloat(e.value);
+				gtr.setAttribute('transform',"rotate("+oelR+" 0 0)")
+//alert("boo-ro");
+				break;
+		default: alert(se+' /intext/ '+e);
+}	}
+
+//function init_vbv(se) { svgE.viewBox = vbv[0]+' '+vbv[1]+' '+vbv[2]+' '+vbv[3]; }
+
+</script>
+<!--
+</head> <body onload="initialize('./details/beam_hanger.svg');">
+</head> <body onload="start();fileform();">
+</head> <body onload="start();">
+</head> <body onload="start();initialize('./details/beam_hanger.svg');">
+-->
+</head> <body onload="start();">
+	<div align="center">
+		<div>
+	<button type="button" onclick="zr=xf(zr,sp);pr*=sp;"><b>F</b>aster</button>
+	<h1 id=tname>
+		<select onchange="fileform()" id='fs' autofocus name="filemenu" size="1">
+			<option value="./details/beam_hanger.svg" selected>beam_hanger</option>
+			<option value="./znf.svg">ZN</option>
+			<option value="./snf.svg">SN</option>
+			<option value="./wef.svg">WE</option>
+			<option value="./combi.svg">combi</option>
+			<option value="./plumb.svg">plumb</option>
+		</select>
+		<input type="submit" value="" style="display:none" />
+		<span id='filename'>D-goof</span>
+	</h1>
+	<button type="button" onclick="zr=xf(zr,1/sp);pr/=sp;">slowe<b>R</b></button><br />
+<form id='ff' action='JavaScript:fileformXX(this)'>
+	<span tabindex=0>
+		<!-- button type="button" onclick="intext('ro')">Rotate</button -->
+		Rotate <input contenteditable="true" type="number" id="ro" onchange="intext('ro')" value="0"/>
+		Height <input contenteditable="true" type="number" id="oh" onchange="intext('oh')" value="400"/>
+		Width  <input contenteditable="true" type="number" id="ow" onchange="intext('ow')" value="600"/>
+	</span>
+</form>
+
+	<h1 style="display:none">pan/zoom/rotate</h1>
+	<em>
+		<button type="button" onclick="pz(80)"><b>P</b>ortrait</button> :
+		<button type="button" onclick="pz(76)"><b>L</b>andscape</button>, or
+		<button type="button" onclick="pz(66)"><b>B</b>ig</button> :
+		<button type="button" onclick="pz(83)"><b>S</b>mall</button>,
+		mouse wheel or
+		<button type="button" onclick="pz(73);"><b>I</b>n</button> :
+		<button type="button" onclick="pz(79);"><b>O</b>ut</button>,
+		Arrow keys or
+		<button type="button" onclick="pz(85)"><b>U</b>p,</button>
+		<button type="button" onclick="pz(74)"><<b>J</b>,</button>
+		<button type="button" onclick="pz(75)"><b>K</b>>,</button>
+		<button type="button" onclick="pz(78)">dow<b>N</b></button>
+	</em>
+</div>
+	<!-- object id="obEl" onload="intext('ro');init_vbv(obEl.data);" rot="0"
+	<object id="obEl" onload="intext('ro');" rot="0"
+		<object id="obEl" onload="fileform();" rot="0"
+		<object id="obEl" onload="initialize('./details/beam_hanger.svg');" rot="0"
+		<object id="obEl" onload="initialize();" rot="0"
+	-->
+		<object id="obEl" onload="initialize();" rot="0"
+		width="600" height="400" data="./details/beam_hanger.svg" type="image/svg+xml" style="border: 1px black dashed;">
+		<img src="./pics/abengoa.png" alt="Bright St Trust House" />
+	</object>
+	<p>Press F5 to reset.</p>
+</div> </body> </html>
