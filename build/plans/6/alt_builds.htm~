@@ -1,0 +1,130 @@
+<!doctype html public "-//w3c//dtd html 3.2 final//en">
+	<link rel="stylesheet" type="text/css" href="../../../../srp/globals/div.css">
+<html><head><title>Bright St House Alternative Builds 6</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+
+<!--
+i.tgu.ca/bright_alt_builds
+db.tgu.ca/bright/build/plans/6/plan.htm
+http://dl.dropbox.com/u/3595000/bright/build/plans/6/plan.htm
+http://dl.dropbox.com/u/17113195/bright/build/plans/6/alt_builds.svg
+-->
+
+<style  type="text/css">
+#plan {color:pink; float:left; border: 1px solid}
+h1	{}
+.gg {//font-size: 300%;
+//	float:right;
+	color:darkblue;
+	font-style: italic;
+}
+span:hover{font-style: normal;}
+span.scene {font-size: 197%;
+  border: 0px solid}
+.hj {font-size: 97%;
+  border: 0px solid}
+.url {float:right;
+    color:white;
+    font-size: 60%;
+  border: 0px solid}
+.flt {float:left;
+    color:black;
+    font-size: 180%;
+    height:208;
+  border: 10px solid}
+.rgt {float:right;
+    color:red;
+    font-size: 180%;
+    height:208;
+  border: 0px solid}
+.poem {float:left;
+    align:middle;
+    font-family: monospace;
+    font-size: 100%;
+    height:208;
+  border: 0px solid}
+pre {border: 1px dashed;}
+a
+{font-size: 135%;
+font-style:italic;
+text-decoration:underline;}
+
+a:link{color: blue;}
+a:visited{color: orange;}
+
+a:hover
+{font-style: normal;
+color:green;}
+<!--
+-->
+</style>
+
+
+<body bgcolor="#dddddd" text="#000000" link="#ff0000" vlink="#800000" alink="#ff00ff" background="?">
+
+<center>
+<h2>LBA alternatives for the Seattle property at
+<br /><a href="http://tgu.ca/house">4323 5th NW</a>. </h2>
+
+
+<hr align="center" width="33%">
+
+<p align="right"> </p>
+---~ This Page: <a href="http://i.tgu.ca/bright_alt_builds">bright_alt_builds</a>
+<a href="http://db.tgu.ca/bright/build/plans/6/alt_builds">-</a>
+<br />Community Build:
+<a href="http://i.tgu.ca/bright_plan_5">bright_plan_5</a>
+<a href="http://db.tgu.ca/bright/build/plans/5/plan.htm">-</a>
+<br />Older build on established 4323:
+<a href="http://i.tgu.ca/bright_rebuild_3">bright_rebuild_3</a>
+<a href="http://db.tgu.ca/bright/rebuild_3.htm">-</a>
+
+<hr align="center" width="33%">
+
+</center>
+
+<div class="fl" style="float:left;margin:0 5px 0 0;">
+<p>
+These alternatives give a glimpse towards the future of a build at 4323 5th NW. The graphic can outline (using the controls on the left) a community and an individual build; and show for them their aerial imagery and survey data.
+</p><p>
+The following plan, can be
+<span onclick="planid.width*=.87" style="color:#f88;">decreased</span> or
+<span onclick="planid.width*=1.11" style="color:#8f8">increased</span> in size.
+</p>
+
+<object id="planid" data='http://dl.dropbox.com/u/17113195/bright/build/plans/6/alt_builds.svg'
+width="400" type="image/svg+xml"></object>
+<br />
+
+<p>
+A community house build assumes that negotiations between the title insurance company (Stewart) and the Westmorelands succeeds. The fall back is an individual build centered on the "grandfathered" structure i lived in for 15 years and is seen in these 2009 aerial photographs. The land for this fall back position would still need to be settled before a build can proceed.
+</p><p>
+The LBA survey (below) was drafted to split the 4323 property in half giving Heil the 4325 land + 16 ft of 4323 and the Westmorelands 4317 + 16 ft of 4323.
+Currently Roy Westmoreland has disavowed the LBA survey and is negotiating for more land.
+</p><p>
+The plan shown above gives them 5 more feet, reducing Heil`s land to 43x91 feet (from 48x91 in the survey). It also provides for and easement, on the westmoreland land of 8 feet, for roadway usage only. It would provide a buffer and give the synergistic effect of three lanes for vehicle: the middle (being clear) can access either side.
+</p><p>
+An alternative, without an easement, of 46x91 which makes the two offspring lots of equal size would also work - but would lose the synergy.
+</p>
+
+
+<hr size=5 width=50% />
+
+
+<a href='http://dl.dropbox.com/u/17113195/bright/build/plans/6/lba/heil_lba-120717-4c.gif'>
+<img src="http://dl.dropbox.com/u/17113195/bright/build/plans/6/lba/heil_lba-crop-120717.png"
+alt="roof view" border="1" width=600>
+</a>
+<br />Click image for the full LBA survey, or see the
+<a href="http://dl.dropbox.com/u/17113195/bright/build/plans/6/lba/heil_lba-120717.pdf">
+PDF</a>
+
+<hr size=5 width=50% />
+
+
+<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;aq=0&amp;oq=4323+5th+&amp;sll=37.0625,-95.677068&amp;sspn=41.818029,79.013672&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=4323+5th+Ave+NW,+Seattle,+Washington+98107&amp;ll=47.659619,-122.363248&amp;spn=0.00077,0.001206&amp;z=19&amp;output=embed"></iframe><br /><small><a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=4323+5th+Ave+NW,+Seattle,+WA&amp;aq=0&amp;oq=4323+5th+&amp;sll=37.0625,-95.677068&amp;sspn=41.818029,79.013672&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=4323+5th+Ave+NW,+Seattle,+Washington+98107&amp;ll=47.659619,-122.363248&amp;spn=0.00077,0.001206&amp;z=21" style="color:#0000FF;text-align:left">View Close Map Page</a></small>
+
+</div>
+</body></html>
+

@@ -1,0 +1,61 @@
+<!-- Edited by XMLSpy® -->
+<bookstore>
+<book category="cooking">
+<title lang="en">Everyday Italian</title>
+<author>Giada De Laurentiis</author>
+<year>2005</year>
+<price>30.00</price>
+</book>
+<book category="children">
+<title lang="en">Harry Potter</title>
+<author>J K. Rowling</author>
+<year>2005</year>
+<price>29.99</price>
+</book>
+<book category="web">
+<title lang="en">XQuery Kick Start</title>
+<author>James McGovern</author>
+<author>Per Bothner</author>
+<author>Kurt Cagle</author>
+<author>James Linn</author>
+<author>Vaidyanathan Nagarajan</author>
+<year>2003</year>
+<price>49.99</price>
+</book>
+<book category="web" cover="paperback">
+<title lang="en">Learning XML</title>
+<author>Erik T. Ray</author>
+<year>2003</year>
+<price>39.95</price>
+</book>
+</bookstore>
+
+books.xml
+
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="loadxmldoc.js"> 
+</script>
+</head>
+<body>
+
+<script type="text/javascript">
+xmlDoc=loadXMLDoc("books.xml");
+x=xmlDoc.getElementsByTagName('book')[0];
+x2=xmlDoc.getElementsByTagName('book')[1];
+cn=x.cloneNode(false);
+cn2=x2.cloneNode(true);
+xmlDoc.documentElement.appendChild(cn);
+xmlDoc.documentElement.appendChild(cn2);
+
+//Output all titles
+y=xmlDoc.getElementsByTagName("title");
+for (i=0;i<y.length;i++)
+{
+document.write(y[i].childNodes[0].nodeValue);
+document.write("<br />");
+}
+</script>
+</body>
+</html>
