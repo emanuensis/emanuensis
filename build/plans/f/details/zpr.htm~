@@ -1,0 +1,155 @@
+<!DOCTYPE html> <html> <head>
+<baseX href="http://samples.msdn.microsoft.com/workshop/samples/svg/zoomAndPan/orgChart.html" />
+  <title>pan/zoom/reform</title>
+
+<style>b{ color:red}
+</style>
+<script>
+	files=".\\details\\beam_hanger.svg .\\zn.svg .\\sn.svg .\\we.svg .\\combi.svg .\\plumb.svg";
+	files=files.split(" ");
+	var leftArrow   = 37; // The numeric code for the left arrow key.
+	var upArrow     = 38;
+	var rightArrow  = 39;
+	var downArrow   = 40;
+	var h=72; var j=74; var k=75; var l=76; var u=85;
+	var l=76; var n=78; var p=80; var b=66; var s=83;
+	var i=73; var o=79; var r=82;
+	var panRate     = 10; // Number of pixels to pan per key press.
+	var zoomRate    = 1.1;
+	var theSvgElement;
+    function processKeyPress(evt) {
+      var viewBox = theSvgElement.getAttribute('viewBox');
+      var viewBoxValues = viewBox.split(' ');
+      viewBoxValues[0] = parseFloat(viewBoxValues[0]);
+      viewBoxValues[1] = parseFloat(viewBoxValues[1]);
+//alert("evt.keyCode: "+evt.keyCode);
+		f=1.001;
+      switch (evt.keyCode)
+      {	case leftArrow: viewBoxValues[0] += panRate; break;
+         case rightArrow: viewBoxValues[0] -= panRate; break;
+         case upArrow: viewBoxValues[1] += panRate; break;
+         case downArrow: viewBoxValues[1] -= panRate; break;
+         case u: viewBoxValues[1] += f; break;
+      	case k: viewBoxValues[0] -= f; break;
+         case j: viewBoxValues[0] += f; break;
+         case n: viewBoxValues[1] -= f; break;
+
+         case r: zoom('zoomOut'); mouseWheelEvent.cancelBubble = true; break;
+
+         case i: viewBoxValues[2] /= f; viewBoxValues[3] /= f; theSvgElement.setAttribute('viewBox', viewBoxValues.join(' ')); break;
+         case o: viewBoxValues[2] *= f; viewBoxValues[3] *= f; theSvgElement.setAttribute('viewBox', viewBoxValues.join(' ')); break;
+         case s: svgW/=f;svgH/=f;oel.setAttribute('width',svgW+'px');oel.setAttribute('height',svgH+'px');break;
+         case b: svgW*=f;svgH*=f;oel.setAttribute('width',svgW+'px');oel.setAttribute('height',svgH+'px');break;
+         case l: svgW+=f;svgH-=f;oel.setAttribute('width',svgW+'px');oel.setAttribute('height',svgH+'px');break;
+			case p: svgH+=f;svgW-=f;oel.setAttribute('width',svgW+'px');oel.setAttribute('height',svgH+'px');break;
+//         default: alert(evt.keyCode);
+          break; } // switch
+      theSvgElement.setAttribute('viewBox', viewBoxValues.join(' '));	// viewBoxValues with spaced values.
+    }
+    function zoom(zoomType) {
+//alert(zoomType);
+      var viewBox = theSvgElement.getAttribute('viewBox');
+//alert(viewBox);
+      var viewBoxValues = viewBox.split(' ');
+//alert(viewBoxValues);
+      viewBoxValues[2] = parseFloat(viewBoxValues[2]);
+      viewBoxValues[3] = parseFloat(viewBoxValues[3]);
+//alert(zoomType+" -type,rate- "+zoomRate);
+		if (zoomType == 'zoomIn') {
+        viewBoxValues[2] /= zoomRate;
+        viewBoxValues[3] /= zoomRate;
+       } else if (zoomType == 'zoomOut') {
+			viewBoxValues[2] *= zoomRate;
+			viewBoxValues[3] *= zoomRate;	
+      } else alert("function zoom(zoomType) given invalid zoomType parameter.");
+      theSvgElement.setAttribute('viewBox', viewBoxValues.join(' ')); }
+    function zoomViaMouseWheel(mouseWheelEvent) {
+      if (mouseWheelEvent.wheelDelta > 0)
+        zoom('zoomIn');
+      else
+        zoom('zoomOut');
+      /* When the mouse is over the webpage, don't let the mouse wheel scroll the entire webpage: */
+      mouseWheelEvent.cancelBubble = true;	
+      return false; }
+    function initialize() { /* Add event listeners: */
+document.getElementById('filename').textContent = files[0];
+      window.addEventListener('keydown', processKeyPress, true);		// let bubble.
+//alert('keydown');
+      window.addEventListener('mousewheel', zoomViaMouseWheel, false);	// no bubble
+//alert('mousewheel');
+
+	oel=document.getElementById('objectElement');
+//alert('oel= '+oel);
+// Not all browsers current support the getSVGDocument() method (as described in the W3C SVG spec).
+	if (oel.contentDocument) {
+//	alert('boo');
+//    theSvgDocument = oel.contentDocument.document;
+    theSvgDocument = oel.contentDocument;
+	} else {
+//	alert('bootoo');
+		try { theSvgDocument = oel.getSVGDocument(); }
+		catch(exception){alert('oel= '+oel)}
+	}
+
+//alert(theSvgDocument+' ...theSvgDocument');
+
+//		theSvgElement = document.getElementById("beam_hanger");
+//		theSvgElement = theSvgDocument.getElementById('beam_hanger');
+    theSvgElement = theSvgDocument.documentElement;
+//alert(theSvgElement+' ...theSvgElement');
+//	svgW=theSvgElement.width;
+//	svgH=theSvgElement.height;
+	svgW=parseFloat(oel.getAttribute('width'));
+	svgH=parseFloat(oel.getAttribute('height'));
+//alert(theSvgElement.width+' ...theSvgElement.width');
+
+		theSvgElement.addEventListener('keydown', processKeyPress, true);
+//alert('processKeyPress');
+      theSvgElement.addEventListener('mousewheel', zoomViaMouseWheel, false);
+      /* If desired, one can set the initial size and position of the embedded SVG graphic here: */
+//alert('zoomViaMouseWheel');
+      theSvgElement.setAttribute('viewBox', 0 + " " + 0 + " " + 200 + " " + 300);
+//alert('viewBox');
+//alert(theSvgElement.getAttribute('viewBox'));
+}
+
+function fileform(aa) { /* file list response: */
+	fs=document.getElementById('fs');
+	for(ii=0;ii<6;ii++) if(fs.options[ii].selected==true) {
+		filen=fs.options[ii].getAttribute('value'); break}
+//	alert(ii+" = "+filen);
+	document.getElementById('filename').textContent = filen;
+	oel.setAttribute('data',filen);
+}
+
+  </script>
+</head> <body onload="initialize();">
+	<div align="center">
+		<div>
+	<h1>pan/zoom/reform</h1>
+      <button type="button" onclick="zoom('zoomIn');"><b>I</b>n</button>
+      or mouse wheel
+      <button type="button" onclick="zoom('zoomOut');"><b>O</b>ut</button>
+      <br />Arrow keys to pan (or <em><b>U</b>p, <<b>J</b>, <b>K</b>>, dow<b>N</b></em>)
+       <br /><em><b>R</b>otate, <b>P</b>ortrait / <b>L</b>andscape or <b>B</b>ig / <b>S</b>mall</em>
+	<h1 id=tname>
+<form id='ff' action='JavaScript:fileform(this)'>
+	<select id='fs' autofocus name="filemenu" size="1">
+		<option value="./beam_hanger.svg">beam_hanger</option>
+		<option value="../f/zn.svg" selected>ZN</option>
+		<option value="././sn.svg">SN</option>
+		<option value="././we.svg">WE</option>
+		<option value="././combi.svg">combi</option>
+		<option value="././plumb.svg">plumb</option>
+	</select>
+	<input type="submit" value="this file" />
+	<span id='filename'>D-goof</span></h1>
+</form>
+
+</div>
+    <object id="objectElement" width="400px" height="600px" data=".\beam_hanger.svg" type="image/svg+xml" style="border: 1px black dashed;">
+      <img src="../pics/abengoa.png" alt="ZN" />
+    </object>
+    <p>Press F5 to reset.</p>
+  </div>
+</body> </html>
