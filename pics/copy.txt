@@ -1,0 +1,132 @@
+---- ExifTool ----
+ExifTool Version Number         : 9.69
+---- System ----
+File Name                       : 1407201200m78675 - Copy.jpg
+Directory                       : D:/db/emanuensis/Dropbox/Public/bright/pics/14/07/140720/web
+File Size                       : 108 kB
+File Modification Date/Time     : 2014:08:14 12:31:36-07:00
+File Access Date/Time           : 2014:09:09 14:44:21-07:00
+File Creation Date/Time         : 2014:09:09 14:44:18-07:00
+File Permissions                : rw-rw-rw-
+---- File ----
+File Type                       : JPEG
+MIME Type                       : image/jpeg
+Exif Byte Order                 : Little-endian (Intel, II)
+Image Width                     : 600
+Image Height                    : 399
+Encoding Process                : Baseline DCT, Huffman coding
+Bits Per Sample                 : 8
+Color Components                : 3
+Y Cb Cr Sub Sampling            : YCbCr4:4:4 (1 1)
+---- IFD0 ----
+Image Description               : KONICA MINOLTA DIGITAL CAMERA
+Make                            : KONICA MINOLTA
+Camera Model Name               : MAXXUM 7D
+Orientation                     : Horizontal (normal)
+X Resolution                    : 72
+Y Resolution                    : 72
+Resolution Unit                 : inches
+Software                        : MAXXUM 7D v1.10
+Modify Date                     : 2014:08:14 12:31:19
+Y Cb Cr Positioning             : Centered
+---- ExifIFD ----
+Exposure Time                   : 1/2000
+F Number                        : 2.8
+Exposure Program                : Program AE
+ISO                             : 100
+Exif Version                    : 0221
+Date/Time Original              : 2004:01:01 00:00:00
+Create Date                     : 2004:01:01 00:00:00
+Components Configuration        : Y, Cb, Cr, -
+Brightness Value                : 9.12
+Exposure Compensation           : 0
+Max Aperture Value              : 1.4
+Metering Mode                   : Multi-segment
+Light Source                    : Tungsten (Incandescent)
+Flash                           : Off, Did not fire
+Focal Length                    : 85.0 mm
+Subject Area                    : 1504 1000 256 304
+User Comment                    : 
+Flashpix Version                : 0100
+Color Space                     : Uncalibrated
+Exif Image Width                : 600
+Exif Image Height               : 399
+Custom Rendered                 : Normal
+Exposure Mode                   : Auto
+White Balance                   : Manual
+Digital Zoom Ratio              : 0
+Focal Length In 35mm Format     : 127 mm
+Scene Capture Type              : Standard
+Gain Control                    : None
+Contrast                        : Normal
+Saturation                      : Normal
+Sharpness                       : Soft
+---- Minolta ----
+Maker Note Version              : MLT0
+Exposure Mode                   : Program
+Minolta Image Size              : Large
+Minolta Quality                 : RAW+JPEG
+White Balance                   : Tungsten
+Focus Mode                      : AF-S
+AF Points                       : Center
+Flash                           : Off
+Flash Mode                      : Normal
+ISO Setting                     : Auto
+Exposure Compensation           : 0
+Color Space                     : Adobe RGB
+Sharpness                       : -2
+Contrast                        : 0
+Saturation                      : 0
+Free Memory Card Images         : 526
+Color Temperature               : 0
+Hue Adjustment                  : 0
+Rotation                        : Horizontal (normal)
+F Number                        : 2.8
+Exposure Time                   : 1/2048
+Free Memory Card Images         : 526
+Image Number                    : 11
+Noise Reduction                 : On
+Image Number 2                  : 8675
+Image Stabilization             : On
+Zone Matching On                : Off
+Minolta 0x0010                  : ¯¯¯Ê..2«§ÿ.ÿËþ2Rþ€‚ÿ@...€.¯¯¯ .[...]
+Minolta 0x0018                  : '‚...4ƒ...ö4 ....2....[...]
+Minolta 0x0020                  : ®®® .....³[...]
+Compressed Image Size           : 2825792
+Preview Image Start             : 2875395
+Preview Image Length            : 45440
+Scene Mode                      : Standard
+Color Mode                      : Adobe RGB
+Minolta Quality                 : Fine
+Flash Exposure Compensation     : 0.5
+Teleconverter                   : None
+Minolta 0x0106                  : 0
+Image Stabilization             : On
+Zone Matching                   : ISO Setting Used
+Color Temperature               : 0
+Lens Type                       : Minolta AF 85mm F1.4 G (D)
+Minolta 0x010d                  : 0
+---- InteropIFD ----
+Interoperability Index          : R98 - DCF basic file (sRGB)
+Interoperability Version        : 0100
+---- IFD1 ----
+Compression                     : JPEG (old-style)
+X Resolution                    : 72
+Y Resolution                    : 72
+Resolution Unit                 : inches
+Thumbnail Offset                : 39226
+Thumbnail Length                : 7329
+Y Cb Cr Positioning             : Co-sited
+---- Composite ----
+Aperture                        : 2.8
+Image Size                      : 600x399
+Lens ID                         : Minolta AF 85mm F1.4 G (D)
+Preview Image                   : (Binary data 45440 bytes, use -b option to extract)
+Scale Factor To 35 mm Equivalent: 1.5
+Shutter Speed                   : 1/2000
+Thumbnail Image                 : (Binary data 7329 bytes, use -b option to extract)
+Circle Of Confusion             : 0.020 mm
+Field Of View                   : 16.1 deg
+Focal Length                    : 85.0 mm (35 mm equivalent: 127.0 mm)
+Hyperfocal Distance             : 128.31 m
+Light Value                     : 13.9

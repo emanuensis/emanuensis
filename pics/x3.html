@@ -1,0 +1,60 @@
+<html><head> <title>3x</title>
+
+<script type="text/javascript">ww=412;</script>
+<script type="text/javascript">
+function loaded(){
+  x=document.getElementById("me");
+ai='';
+for(i=0;i<dirs.length;i++){
+	ai+="<br>"+imgs[dirs[i]]};
+x.innerHTML=ai;
+
+y=document.getElementById("yo");
+aij='';
+for(i=0;i<dirs.length;i++){
+	aij+="<br>"+dirs[i]+"<br>";
+	for(j=0; j<imgs[dirs[i]].length; j++){
+		aij+='<img src="'
+			+dirs[i]
+			+'/thm/'
+			+imgs[dirs[i]][j]
+			+'" \>'
+}	}
+y.innerHTML=aij;
+}
+</script>
+
+<script type="text/javascript">xx=712;</script>
+<script type="text/javascript">
+function loadold(){
+  x=document.getElementById("me");
+  x.innerHTML="old hooch";
+}
+imgs=[];
+</script>
+<script type="text/javascript" src="./weblist.js"></script>
+
+<script type="text/javascript">
+
+for(i=0;i<dirs.length;i++){
+	var js = document.createElement("script");
+	js.type = "text/javascript";
+	js.src = dirs[i]+"/imgs.js";
+	document.head.appendChild(js);
+}
+</script>
+
+<!-- <script type="text/javascript" src="./jon/14/07/15/imgs.js"></script>
+<script type="text/javascript" src="./14/07/140721/imgs.js"></script>
+-->
+
+</head><body onload="loaded()">
+<p id="me">boo</p>
+<p id="yo">hoo</p>
+</body></html>
+<!-- Dynamically loading an external JavaScript or CSS file
+
+http://www.javascriptkit.com/javatutors/loadjavascriptcss.shtml
+http://stackoverflow.com/questions/950087/how-to-include-a-javascript-file-in-another-javascript-file
+http://www.html5rocks.com/en/tutorials/speed/script-loading/
+-->

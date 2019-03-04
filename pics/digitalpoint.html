@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<!--https://forums.digitalpoint.com/threads/onmousedown-with-onmouseover.1518891/-->
+<head><title>Test Click & Hover</title>
+<script type="text/javascript">
+var clicked_left=false;
+function clickedLeft(e) {
+	mc.innerHTML="Click-L: Have clicked the left div";
+	clicked_left=true;
+//	l.onmouseover=hoveredLeft;
+	return(false);
+}
+function hoveredLeft(e) {
+  if (clicked_left)
+    mh.innerHTML="Hover-L: Now hovering Left, while dragging from left:<br /> "
+	+l.onmousemove.arguments[0].offsetX+","
+	+l.onmousemove.arguments[0].offsetY;
+// 	+l.onmouseover.arguments[0].offsetX+","
+// 	+l.onmouseover.arguments[0].offsetY;
+	return(false);
+}
+function hoveredRight(e) {
+	if (clicked_left) mh.innerHTML =
+	"Hover-R: Now hovering the right div, while dragging from left:<br /> "
+	+r.onmousemove.arguments[0].offsetX+","
+	+r.onmousemove.arguments[0].offsetY;
+// 	+r.onmouseover.arguments[0].offsetX+","
+// 	+r.onmouseover.arguments[0].offsetY;
+	return(false);
+}
+function resetAll(e) {
+	mc.innerHTML="Click-L: none";
+	mh.innerHTML="Hover-R: none";
+	clicked_left=false;
+}
+function resetRight(e) { mh.innerHTML="Hover-R: none"; }
+function resetLeft(e) { mh.innerHTML="Hover-L: none"; }
+window.onload=function() {
+	mh=document.getElementById("msg_hovered");
+	mc=document.getElementById("msg_clicked");
+	l=document.getElementById("left");
+	r=document.getElementById("right");
+	w=document.getElementById("wrap");
+	l.onmousedown=clickedLeft;
+	l.onmousemove=hoveredLeft;
+//	l.onmouseover=hoveredLeft;
+	r.onmousemove=hoveredRight;
+//	r.onmouseover=hoveredRight;
+	w.onmouseup=resetAll;
+	r.onmouseout=resetRight;
+	l.onmouseout=resetLeft;
+}
+document.addEventListener('dblclick', function(e) { console.log(
+    'page: ' + e.pageX + ',' + e.pageY, 
+    'client: ' + e.clientX + ',' + e.clientY, 
+    'screen: ' + e.screenX + ',' + e.screenY) }, false);
+</script>
+ 
+<style type="text/css">
+#wrap	{ position: relative; overflow: auto; }
+#left, #right { float: left; width: 200px; height: 200px;
+         margin: 10px; border: 2px solid black; }
+#left	{ background: red; }
+#right{ background: green; }
+#msg_clicked	{ color: red; }
+#msg_hovered	{color: green; }
+</style> </head> <body>
+
+<div id="wrap">
+  <div id="left">left</div>
+  <div id="right">right</div>
+</div>
+<p id="msg_clicked">Click-L: none</p>
+<p id="msg_hovered">Hover-R: none</p>
+
+</body> </html>

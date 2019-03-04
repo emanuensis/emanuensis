@@ -1,0 +1,751 @@
+<!doctype html><html><head><title>BST Building Pics</title>
+<style>
+b.eon	{
+	font-size:105%;
+	color:green;	}
+b.eoff	{
+	font-size:120%;
+	color:red;	}
+img.web {
+	border: 2px dashed green;
+	border-width: 4px 2px;
+    -webkit-animation: mymove 2s infinite;
+    animation: mymove 2s infinite;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+}
+img.thm {
+	border-width: 4px 2px;
+	border-style: dashed;
+	border-color: lightgray;
+    -webkit-animation: mymove 2s infinite;
+    animation: mymove 2s infinite;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+}
+@-webkit-keyframes mymove { /* Cr, Saf, Op*/
+    10% {border-width: 4px 22px;
+	border-color: red; }
+@keyframes mymove { /* Standard syntax */
+    10% {border-width: 4px 22px;
+	border-color: red; }
+</style>
+<script type="text/javascript">//url-parameters
+// http://ziemecki.net/content/javascript-parsing-url-parameters
+// return a parameter value from the current URL
+globs=function f(e,c){var b=e[0],d=e.slice(1),g=c.length;if(b=="+")return f("?*"+d,c);if(b=="?")b=g;else if(b=="*"){for(b=0;b<=g;++b)if(f(d,c.slice(b)))return 1;return 0}else{if(b=="\\"){b=e[1];d=e.slice(2)}b=b==c[0]}return b&&(!d.length&&!g||f(d,c.slice(1)))}
+
+glob=function f(e,c){
+//http://codegolf.stackexchange.com/questions/467/implement-glob-matcher JavaScript
+var b=e[0],d=e.slice(1),g=c.length;if(b=="+")return f("?*"+d,c);if(b=="?")b=g;else if(b=="*"){for(b=0;b<=g;++b)if(f(d,c.slice(b)))return 1;return 0}else{if(b=="\\"){b=e[1];d=e.slice(2)}b=b==c[0]}return b&&(!d.length&&!g||f(d,c.slice(1)))
+}
+function newURL(URL) {
+ 	if(URL.value!='')location.href=URL.value;
+ 	return; }
+function thmX() {
+	thmsid=document.getElementById('thms');
+//	thmsid.style.display= (thmsid.style.display=='none')?'inline':'none';
+	thmsid.style.display= (thmsid.style.display=='none')?'block':'none';
+}
+function picZ() {
+	picZid=document.getElementById('divpics');
+//	picZid.style.display= (picZid.style.display=='none')?'inline':'none';
+	picZid.style.display= (picZid.style.display=='none')?'block':'none';
+}
+function getParams() {
+	var params = location.search.substr(location.search.indexOf("?")+1);
+	params=decodeURIComponent(params);
+	params = params.split(",");
+	return params;
+}
+a2k={">":190, "<":188, "^":54, v:86
+	, a:65, c:67, f:70, m:77, r:82, x:88, z:90, };
+function replacer(match,p1,p2,p3,offs, str) {
+	if(first==1){
+		first=0;oc=0;oldpre=p1;mat=p2;return match;}
+	if((p1+p2)==(oldpre+mat)) return match
+	if(cnt<=oc++)return "";
+	oldpre=p1;mat=p2;return match;}
+function foo() {
+	fooable=1;
+	if(typeof framesSI!=='undefined') clearInterval(framesSI);
+	 movieon=false;
+	preloadid.innerHTML="";	//clear	
+	var params = getParams();
+//	while(params.length>0){
+	for (var i=0; i<params.length; i++)
+		switch (params[i][0]) {
+			case "i": {//images
+				dn=params[i].substring(1).split(":");
+				if(dn[0].length==0)dn[0]="*";
+				
+				dn1=dn[1].split(";");
+				
+				for(d1=0;d1<dirs1.length;d1++){
+					var di=dirs1[d1];
+					if(!glob(dn[0],di))continue;
+					var ni=imgs[dirs1[d1]];
+					for(ii=0;ii<ni.length;ii++){
+						var nii=ni[ii].split(".")[0];
+//						if(!glob(dn[1],nii))continue;
+
+						var alldn1=0;
+						for(j=0;j<dn1.length;j++)
+							alldn1+=glob(dn1[j],nii);
+						if(!alldn1)continue;
+
+						var iName=document.getElementById('t'+nii+".jpg");
+						webit(di,iName);						
+			}	}	}	break;
+			case "x": {//thms off
+				thmsid=document.getElementById('thms');
+				thmsid.style.display= 'none'
+			}	break;
+			case "z": {//pics off
+				picZid=document.getElementById('divpics');
+				picZid.style.display= 'none';
+			}	break;
+			case "n": {//N per date selected
+				doNext="foo";
+				N=params[i].length==1?1
+					:params[i].substring(1);
+				for(d1=0;d1<dirs1.length;d1++){
+					var Ni=imgs[dirs1[d1]].length;
+					for(j=0;j<N;j++){
+						Nimg=Math.floor(Math.random()*Ni);
+						var tiNimg=imgs[dirs1[d1]][Nimg];
+						tiNimg=document.getElementById('t'+tiNimg);
+						if(null==tiNimg) return;
+						webit(dirs1[d1],tiNimg);
+//						webit(tiNimg);
+				}	}
+				doNext="foo";}break;
+			case "p": {//Pics display
+				allonoffpics(dirs1);
+				}break;
+			case "t": {//Thms display
+				allonoff(dirs1);
+				}break;
+			case "*": {//AND
+				andre=new RegExp(params[i].substring(1));
+				for(d=0;d<dirs1.length;d++)
+					if(andre.test(dirs1[d]))
+						dirs2.push(dirs1[d]);
+				while(dirs1.length>0) dirs1.pop();
+				for(d=0;d<dirs2.length;d++)
+					dirs1.push(dirs2[d]);
+				while(dirs2.length>0) dirs2.pop();
+				}break;
+			case "+": {//OR
+				andre=new RegExp(params[i].substring(1));
+				for(d=0;d<dirs.length;d++)
+					if(andre.test(dirs[d]))
+						dirs1.push(dirs[d]);
+				for(d=0;d<dirs.length;d++) //dup elim, ordering
+					for(d1=0;d1<dirs1.length;d1++)
+						if(dirs[d]==dirs1[d1]) {
+							dirs2.push(dirs[d]); break; }
+				while(dirs1.length>0) dirs1.pop();
+				for(d=0;d<dirs2.length;d++)
+					dirs1.push(dirs2[d]);
+				while(dirs2.length>0) dirs2.pop();
+				}break;
+			case "-": {//Neg from Universe of dates
+				d1=0;
+				for(d=0;d<dirs.length;d++) {
+					if(dirs1[d1]==dirs[d]) d1++;
+					else dirs2.push(dirs[d]);	}
+				while(dirs1.length>0) dirs1.pop();
+				for(d2=0;d2<dirs2.length;d2++)
+					dirs1.push(dirs2[d2]);
+				while(dirs2.length>0) dirs2.pop();
+				}break;
+			case "|": {//Reverse
+				for(d1=dirs1.length-1;d1>=0;d1--)
+					dirs2.push(dirs1[d1]);
+				while(dirs1.length>0) dirs1.pop();
+				for(d2=0;d2<dirs2.length;d2++)
+					dirs1.push(dirs2[d2]);
+				while(dirs2.length>0) dirs2.pop();
+				}break;
+			case "f": if(1<params[i].length){//First
+				aft="(.*)$";
+				pre="^(";for(j=0;j<params[i][1];j++) pre+="[^/]*/";
+				pre+=")";
+				mid="(\\d+)";
+				dstre=pre+mid+aft;
+				dre=new RegExp(pre+mid+aft);
+				cnt=params[i][2]-1;
+				first=1;
+				for(d1=0;d1<dirs1.length;d1++)
+					dirs2.push(dirs1[d1].replace(dre,replacer));
+				while(dirs1.length>0) dirs1.pop();
+				for(d2=0;d2<dirs2.length;d2++)
+					if(dirs2[d2]!="")
+						dirs1.push(dirs2[d2]);
+				while(dirs2.length>0) dirs2.pop();
+				break;}
+			default: for (var j=0; j<params[i].length; j++)
+//fails ... maybe put foo at timeout end ...
+				keys(a2k[params[i][j]],true);
+//		}
+}	}
+</script>
+<script type="text/javascript"> //	init vars
+month="<b style='color:green'>Thumbnails by Build Month </b>";
+months=["JAN:","FEB:","MAR:","APR:","MAY:","JUN:","JUL:","AUG:","SEP:","OCT:","NOV:","DEC:"];
+officon="&#x21BB; &nbsp;";	//roll up [vs &ntri; = #x022EB]
+onicon ="&#x21B7; &nbsp;";	//roll on [vs &nabla;]
+eoff=" class='eoff' onclick='offon(this)'> "+officon+"</b>";	// &ntri; = #x022EB [#x21BB]
+eon=" class='eon' onclick='onoff(this)'> "+onicon+"</b>";
+picsz=755;
+dwell=1111;
+movieon=false;
+//	init FNs
+function monthv(d){
+	re=/.*\/(\d+)\/\d+$/
+	m=d.replace(re,"$1");
+	m=months[parseInt(m)-1];
+//	console.log(d+", "+m);
+	return(m);
+}
+function allonoff(dirs){
+	for(i=0;i<dirs.length;i++){//q is id of arrows
+		qi=document.getElementById('q'+dirs[i]);
+		simulatedClick(qi,'click');
+}	}
+function allonoffpics(dirs){
+	for(i=0;i<dirs.length;i++){//d is id of dir name
+		qi=document.getElementById('d'+dirs[i]);
+		simulatedClick(qi,'click');
+}	}
+function offon(e){	//of thumb file display
+	tid=e.id.replace("q","t");
+	tide=document.getElementById(tid);
+	if(typeof tide.nf==='undefined')tide.nf=true;
+	tide.style.display=tide.nf?'none':'block';
+	e.innerHTML=tide.nf?onicon:officon;
+	e.classList.remove(tide.nf?"eoff":"eon");
+	tide.nf=!tide.nf;
+	e.className=tide.nf?"eoff":"eon";
+}
+function Clearpics(){
+	preloadid.innerHTML="";	// prob??
+	imgmovie.src="";
+	divmovie.style.height="0px";
+	var movc = document.getElementsByClassName('web'), options={};
+	for(pic=movc.length;0<pic;pic--)
+		simulatedClick(movc[pic-1],'click');
+}
+function loadall(){
+	for(i=0;i<directory.length;i++)
+		simulatedClick(directory[i],'click');
+}
+function stopMovie(){
+	movieon=false;
+	if(typeof framesSI!=='undefined') {
+		clearInterval(framesSI);	}
+	bodid.style.background='white';
+}
+function movieframe(){
+	var frames=preloadid.childNodes;
+	if(typeof lasLasFrame!=='undefined')
+		lasLasFrame.style.borderColor="white";
+	if(lasFrame<frames.length&&doNext!="halt"){
+		divmovie.style.height=picsz+"px";
+		imgmovie.style.height=picsz+"px";
+		imgmovie.src=frames[lasFrame].src;
+		dirInfo=imgmovie.title=frames[lasFrame].title;
+		var addy=imgmovie.src;
+		addy= addy.split("/web/")[1];
+		var paddy=document.getElementById("p"+addy);
+		var fColr=paddy.style.borderColor;
+		fColr=fColr=="white"?"red":"white";
+		paddy.style.borderColor=fColr;
+		
+		lasLasFrame=paddy;
+		
+		
+		imgmovieDivId.innerHTML="("+dirInfo+")"+addy;// viewable picId
+	lasFrame++;	return;	}
+	lasFrame=(lasFrame<preloadid.childNodes.length)?lasFrame:0;//ghh0
+	if(doNext=="repeat") return;
+	if(doNext=="foo")	foo();
+	if(doNext=="halt"){
+		if(typeof framesSI!=='undefined') {
+			clearInterval(framesSI);	}
+		divmovie.style.height="0px";
+		imgmovie.src="";
+		bodid.style.background='white';
+		doNext=fooable?"foo":"repeat";
+}	}
+function movieweb(){
+	bodid.style.background='#444';//'dimgray';
+	if(movieon==false){
+		if(typeof framesSI!=='undefined') {
+			clearInterval(framesSI);	}
+		divmovie.style.height="0px";
+		imgmovie.src="";
+		bodid.style.background='white';
+		return;	}
+	lasFrame=(lasFrame<preloadid.childNodes.length)?lasFrame:0;//ghh0
+	framesSI=setInterval(function() {movieframe()}, dwell);
+}
+function moviewebOLD(){
+	bodid.style.background='#444';//'dimgray';
+	if(movieon==false){
+//		if(movieovr==false){
+			divmovie.style.height="0px";
+			imgmovie.src="";
+			bodid.style.background='white';
+			return;	}
+//	};
+movc = document.getElementsByClassName('web');
+	if(1>movc.length)return;
+	divmovie.style.height=picsz+"px";
+	imgmovie.style.height=picsz+"px";
+	var mov=[];
+	for(i=0;i<movc.length;i++) mov.push(movc[i].src);
+//movid=document.getElementById('movid');
+	movl=1;
+	for(imov=mov.length; 0<imov; imov--) {
+		setTimeout(function(){
+			imgmovie.src=mov[movl==mov.length?0:movl++];
+		}, dwell*imov);
+	}
+	setTimeout(function(){
+			movieon=false; //stop at end, or (w/o),
+//			movieovr=true; //overide
+			movieweb()	//Repeat infinitely
+		}, dwell*(mov.length+1));
+}
+function keys(e,kbsim){
+	tw=parseInt(thmsid.style.width);
+	th=parseInt(thmsid.style.height);
+	var frames=preloadid.childNodes;
+//	switch (kbsim?e:e.keyCode) {
+	switch (kbsim?e:e.which) {
+//http://dmauro.github.io/Keypress/
+	case 999:	//dummy
+	break; case 72: // h
+		addy= imgmovieDivId.innerHTML;
+		dirn=addy.substring(addy.indexOf("(")+1);
+		imgn=addy.substring(addy.indexOf(")")+1);
+		dirn= dirn.split(")")[0];
+		Clearpics();
+		preloadid.innerHTML="";		
+		browseH=0;
+		if(browseV.length==0)
+			for(var i=0;i<dirs1.length;i++) {
+				browseV.push(0);
+				if(dirs1[i]==dirn){
+					browseDir=i+1;
+					for(var j=0;j<imgs[dirs1[i]].length;j++)
+						if(imgs[dirs1[i]][j]==imgn)
+							browseV[i]=j;
+		}	}
+		else
+			for(var j=0;j<imgs[dirs1[browseDir]].length;j++)
+				if(imgs[dirs1[browseDir]][j]==imgn)
+					browseV[browseDir]=j;
+		if(browseDir==0)	browseDir=dirs1.length;
+		browseDir--;
+		for(var j=0;j<imgs[dirs1[browseDir]].length;j++)
+			webit(dirs1[j],
+			document.getElementById("t"+imgs[dirs1[browseDir]][j]));
+		lasFrame=browseV[browseDir];
+		movieframe()
+	break; case 76: // l
+		addy= imgmovieDivId.innerHTML;
+		dirn=addy.substring(addy.indexOf("(")+1);
+		imgn=addy.substring(addy.indexOf(")")+1);
+		dirn= dirn.split(")")[0];
+		Clearpics();
+		preloadid.innerHTML="";		
+		browseH=0;
+		if(browseV.length==0)
+			for(var i=0;i<dirs1.length;i++) {
+				browseV.push(0);
+				if(dirs1[i]==dirn){
+					browseDir=i-1;
+					for(var j=0;j<imgs[dirs1[i]].length;j++)
+						if(imgs[dirs1[i]][j]==imgn)
+							browseV[i]=j;
+		}	}
+		else
+			for(var j=0;j<imgs[dirs1[browseDir]].length;j++)
+				if(imgs[dirs1[browseDir]][j]==imgn)
+					browseV[browseDir]=j;
+		if(browseDir==dirs1.length-1)	browseDir=-1;
+		browseDir++;
+		for(var j=0;j<imgs[dirs1[browseDir]].length;j++)
+			webit(dirs1[j],
+			document.getElementById("t"+imgs[dirs1[browseDir]][j]));
+		lasFrame=browseV[browseDir];
+		movieframe()
+	break; case 74: // j
+		if(lasFrame<=1)lasFrame=frames.length+1;
+		lasFrame-=2;
+		movieframe()
+	break; case 75: // k
+		if(lasFrame==frames.length)lasFrame=0;
+		movieframe()
+	break; case 37: case 188: // < left
+		thmsid.style.width=(tw-10)+"px";
+	break; case 38: case 54: // ^ up
+		thmsid.style.height=(th-10)+"px";
+	break; case 39: case 190: // > right
+		thmsid.style.width=(tw+10)+"px";
+	break; case 40: case 86: //v down
+		//thmsid=document.getElementById("thms");
+		thmsid.style.height=(th+10)+"px";
+	break; case 88: thmX();
+	break; case 90: picZ();
+	break; case 67: // (C)lear pics
+		Clearpics();
+	break; case 70: // (F)oo
+		if(typeof framesSI!=='undefined') {
+			clearInterval(framesSI);}
+		divmovie.style.height="0px";
+		imgmovie.src="";
+		bodid.style.background='white';
+		lasFrame=0;
+		Clearpics();
+		foo();
+	break; case 65: // (A)ll pics
+		loadall();
+	break; case 77: // (M)ovie start/stop
+		movieon=!movieon;	//OFF ow no movies in f
+		movieweb();
+	break; case 82: // un(R)oll/up all thms
+		allonoff(dirs);
+	break; case 27: // Escape: Stop movie
+ 		movieon=false;
+		doNext="halt";
+break;	}	}
+function dragst(evt){ // Thumb box
+	dsx=evt.onmousedown.arguments[0].layerX;
+	dsy=evt.onmousedown.arguments[0].layerY;
+// 	dsx=evt.onmousedown.arguments[0].offsetX;
+// 	dsy=evt.onmousedown.arguments[0].offsetY;
+	dsw=evt.clientWidth;
+	dsh=evt.clientHeight;
+//console.log(dsx+", start "+dsy+", "+dsw+", "+dsh+", "+COUNT);
+}
+function dragon(evt){
+	if(typeof dsx !== 'undefined' && dsx!=-999) {
+		ddx=evt.onmousemove.arguments[0].layerX;
+		ddy=evt.onmousemove.arguments[0].layerY;
+		dew=parseInt(dsw*(ddx/dsx));
+		deh=parseInt(dsh*(ddy/dsy));
+//console.log(dsw+"*"+ddx+"/"+dsx+", dsw*(ddx/dsx)=dew= "+dew+", deh="+deh+", ddy="+ddy);
+	if(dew>=100 && dew<=2000 && deh>=66) {
+		evt.style.width=dew+'px';
+ 		evt.style.height=deh+'px';	}
+//		if(COUNT++==3){ COUNT=0; dsx=-999}
+}	}
+function dragend(evt){
+//console.log(dsx+", end_ "+dsy+", "+dsw+", "+dsh+", "+COUNT);
+	dsx=-999;
+//console.log(dsx+", end2 "+dsy+", "+dsw+", "+dsh+", "+COUNT);
+}
+function dwellt(e){dwell=parseInt(e.value);}
+function webHt(e){
+	picsz=parseInt(e.value);
+	if(picsz<0)	{picsz*=-1;	//if neg do all
+		webs = document.getElementsByClassName("web");
+		for(i=0;i<webs.length;i++) webs[i].height=picsz;
+}	}
+function thmHt(e){
+	thmsz=parseInt(e.value);
+	thms = document.getElementsByClassName("thm");
+	for(i=0;i<thms.length;i++) thms[i].height=thmsz;
+}
+function simulatedClick(target, options) {
+// http://stackoverflow.com/questions/6157929/how-to-simulate-mouse-click-using-javascript (Ans #2)
+	var event = target.ownerDocument.createEvent('MouseEvents'), options = options || {};
+	var opts = { //Set default options to right of ||
+		type: options.type	|| 'click',
+		canBubble:options.canBubble	|| true,
+		cancelable:options.cancelable	|| true,
+		view:options.view	|| target.ownerDocument.defaultView, 
+		detail:options.detail	|| 1,
+		screenX:options.screenX	|| 0, //The coord w/in the entire page
+		screenY:options.screenY	|| 0,
+		clientX:options.clientX	|| 0, //The coord w/in the viewport
+		clientY:options.clientY	|| 0,
+		ctrlKey:options.ctrlKey	|| false,
+		altKey:options.altKey	|| false,
+		shiftKey:options.shiftKey	|| false,
+		metaKey:options.metaKey	|| false,
+		button:options.button	|| 0, //0=left, 1=middle, 2=right
+		relatedTarget:options.relatedTarget	|| null,
+	}
+	//Pass in the options
+	event.initMouseEvent(
+		opts.type,
+		opts.canBubble,
+		opts.cancelable,
+		opts.view, 
+		opts.detail,
+		opts.screenX,
+		opts.screenY,
+		opts.clientX,
+		opts.clientY,
+		opts.ctrlKey,
+		opts.altKey,
+		opts.shiftKey,
+		opts.metaKey,
+		opts.button,
+		opts.relatedTarget
+	);
+	target.dispatchEvent(event);    //Fire the event
+}
+function loaded(){ // init page
+	fooable=0;
+	quotes="'"; quoted='"';
+	browseI=0;browseM=true;browseD=0;
+	browseV=[];	// browse over all images
+	doNext="";	lasFrame=0;
+	doNext=fooable?"foo":"repeat";
+//	doNext="repeat";
+	bodid=document.getElementById('bod');
+	thmsz=parseInt(document.getElementById('thmszid').value);
+	directory= document.getElementsByClassName('directory');
+	preloadid=document.getElementById('preload');
+	divpics=document.getElementById('divpics');
+	divmovie=document.getElementById('divmovie');
+	imgmovie=document.getElementById('imgmovie');
+	imgmovieDivId=document.getElementById('imgmovieDiv');
+	y=document.getElementById("thms");
+	if(null==y)return;
+	thmsid=y;
+	aij=month;
+dirs1=[];	dirs2=[];	//copies for selection...
+for(i=0;i<dirs.length;i++){dirs1.push(dirs[i]);}
+for(i=0;i<dirs.length;i++){
+	mnth=monthv(dirs[i]);
+	if(mnth!=month){
+		month=mnth;
+		aij+="<br />"+month+" ";	}
+	aij+="<b class='directory'"
+		+" id='d"+dirs[i]+"'"
+		+" style='color:blue'"
+		+" onclick='webdir("+i+")'>"+dirs[i]+"</b>"
+		+"<b id='q"+dirs[i]+"'"+eoff
+		+"<div id='t"+dirs[i]+"'>";
+	for(j=0; j<imgs[dirs[i]].length; j++){
+		var nij=imgs[dirs[i]][j];
+		aij+='<img id="t'+nij
+			+'" title="t'+nij
+			+'" class="thm"'
+			+'" height="'+thmsz
+			+'" active="false"'
+			+' onClick="webit('
+			+quotes+dirs[i]+quotes
+			+',this)" src="'
+			+dirs[i]+'/thm/'
+			+nij	+'">';
+		}
+	aij+="</div>";
+}
+y.innerHTML=aij;
+allonoff(dirs);
+foo();
+}
+function webdir(dirii){
+	diri=dirs[dirii];
+	for(j=0; j<imgs[diri].length; j++) {
+		var tij=imgs[diri][j];
+		tij=document.getElementById('t'+tij);
+		if(null==tij)return;
+//		webit(tij);
+		webit(dirs[dirii],tij);
+}	}
+</script>
+<script type="text/javascript">//webit
+function webit(dir,thumb){
+//function webit(thumb){ dir=13;
+	thumb.style.borderColor="red";
+	var webialt=thumb.id.replace("t", "");
+	var webiid = "w"+webialt;
+	if(thumb.active){
+		thumb.active=false;
+		thumb.style.borderColor="lightgray";
+		webi=document.getElementById(webiid);
+		if(null==webi)return;
+		webi.parentNode.removeChild(webi);
+		return; }
+	thumb.active=true;
+	webi = document.createElement("img");
+	preloadimg = document.createElement("img");
+	webi.title=webialt;
+	webi.alt=webialt;
+	webi.id = webiid;
+	thumb.addEventListener("mouseover", function(e){
+		myid=this.id;
+		webid=myid.replace("t", "w");
+		web=document.getElementById(webid);
+		if(null==web)return;
+		e.preventDefault;
+		web.classList.remove("web");
+		web.offsetWidth = web.offsetWidth;
+		web.classList.add("web");
+	}, false);
+	webi.className = "web";
+	webi.src= thumb.src.replace("thm","web");
+	preloadimg.id="p"+webialt;
+	preloadimg.style.border="2px solid white";
+	preloadimg.src= webi.src;
+	preloadimg.height=thmsz/3;
+//	preloadimg.height="thmsz/3";
+	preloadimg.title=dir;	//webit
+	webi.height=picsz;
+	webi.addEventListener("click",function(e){
+		myid=this.id;
+		thmid=myid.replace("w", "t");
+		thumb=document.getElementById(thmid);
+		if(null==thumb)return;
+		thumb.active=false;
+		thumb.style.borderColor="lightgray";
+		this.parentNode.removeChild(this);
+	}, false);
+	webi.addEventListener("mouseover", function(e){
+		myid=this.id;
+		thmid=myid.replace("w", "t");
+		thumb=document.getElementById(thmid);
+		if(null==thumb)return;
+//http://css-tricks.com/restart-css-animation/
+		e.preventDefault;
+		thumb.classList.remove("thm");
+		thumb.offsetWidth = thumb.offsetWidth;
+		thumb.classList.add("thm");
+	}, false);
+//	divpics.appendChild(webi);	// append, prepend:
+	divpics.insertBefore(webi,divpics.firstChild);
+//preloadid.insertBefore(preloadimg,preloadid.firstChild);
+//Do Not reAdd - if already there!
+	var frames=preloadid.childNodes;
+	var addPL=true;
+	for(var ifr=0;ifr<frames.length;ifr++)
+		addPL&=frames[ifr].src !== preloadimg.src;	//not there?
+	if(addPL)preloadid.appendChild(preloadimg);// append at end
+}
+</script>
+<script type="text/javascript" src="./weblist.js"></script>
+<script type="text/javascript">//imgs
+imgs=[];
+for(i=0;i<dirs.length;i++){ // load src's as js's
+	var js = document.createElement("script");
+	js.type = "text/javascript";
+	js.src = dirs[i]+"/imgs.js";
+	document.head.appendChild(js);
+}
+</script>
+
+</head><body id='bod' onload="loaded();dsx=-999;COUNT=0;"
+	onkeydown="keys(event,false)"
+	style="text-align: center; margin:0 auto;background: #fff;">
+<b onclick="keys(38,true)" style="color:red;font-size:+122%;border: 2px solid pink;background:lightcyan">^</b>
+thmBox
+<b onclick="keys(40,true)" style="color:red;font-size:+122%;border: 2px solid pink;background:lightcyan">v</b>
+
+<span id="thmX" onclick="thmX()" style="color:red;font-size:+122%; border: 1px solid red;">thm(X)</span>
+<br />
+
+<div id="thms"
+style="text-align: left; height:200px;width:800px;overflow:scroll;
+margin:0 auto;" onmousedownXXX="dragst(this)" onmousemoveXXX="dragon(this)" onmouseupXXX="dragend(this)"
+></div>
+
+<div style="border: 1px dashed red;" >
+<div style="border: 2px solid orange;" >
+<div style="border: 3px dashed yellow;"
+id=preload> </div></div></div>
+
+<div id="text"
+style="height:25px;width:950px;margin:0 auto;">
+
+<b onclick="keys(37,true)" onmousemoveXXX="dragon(this)" style="color:red;font-size:+122%;border: 2px solid pink;background:lightcyan">&lt;</b>
+thmBox
+<b onclick="keys(39,true)" style="color:red;font-size:+122%;border: 2px solid pink;background:lightcyan">&gt;</b>,
+
+<b style="color:green">&#x21BB;</b>/<b onclick="allonoff(dirs);" size="3" id="allonoff" style="border: 2px solid pink;background:lightcyan">
+<i style="color:red">R</i>oll</b>/<b style="color:green">&#x21B7;</b>
+size:
+<input id="thmszid" name="thmsz" type="text" value="66"
+style="background: pink; width:2em" onchange='thmHt(this)' />
+
+PICsz:
+<input size="3" id="picszid" name="picsz" type="text" value="755"
+style="background: pink; width:2em" onchange='webHt(this)' />
+(negative: all)
+<b onclick="loadall()" id="allmovid" style="border: 2px solid pink;background:lightcyan"><i style="color:red">A</i>LL?</b>
+
+<b onclick="movieon=!movieon;movieweb()" id="movid" style="border: 2px solid pink;background:lightcyan"><i style="color:red">M</i>ovie?:</b>
+
+dwell=
+<input size="3" id="dwellid" name="dwell" type="text" value=1111
+style="background: pink; width:3em" onchange='dwellt(this)' />ms
+<b onclick="Clearpics()" id="ClearPics" style="border: 2px solid pink;background:lightcyan"><i style="color:red">C</i>learPics</b>
+
+<div><h2>Pics showing build progress @
+<a href="http://i.tgu.ca/bright_plan_f">Bright St Trust</a>
+<a href="../build/plans/f/planf.htm">,</a>
+(4323 5th NW, Seattle)</h2>
+<br />To change size/shape of thumb Box use arrow keys
+<!--><br />Click and drag w/in thmbox works for SOME browsers<-->
+<br />Clicks (and mouseovers) just work for thumbs AND for pics...(play)...
+<br />Click on a date or a thumbnail to (re)move it (from)to the selection
+<br />Click on a <b class='eon'>&#x21B7;</b> to show (or <b class='eon'>&#x21BB;</b> to unshow) thumbs for that date
+<br />
+<b style="color:#11f">Keys
+</b>: Arrows (<b style="color:red;font-size:+122%">&lt;^v&gt;</b>) resize thumbbox,
+(<b style="color:red;">R</b>)oll up/down <b>all</b> thumbs
+<br />(<b style="color:red;">M</b>)ovie and <b style="color:red;">Esc</b> (end movie),
+show (<b style="color:red;">A</b>)ll  pics, (<b style="color:red;">C</b>)lear all pics
+
+<br />show/hide thumbnail(<b style="color:red;">X</b>) or  picture(<b style="color:red;">Z</b>) boxes
+
+<br />Browse: Click movie then <b style="color:red;">J K</b> within folder(day) or <b style="color:red;">H L</b> between folders 
+</div></div>
+
+<span id="imgmovieDiv" style="border: 1px solid red;"></span>
+<div id="divmovie"
+style="height:100px">
+<img id="imgmovie" onclick="stopMovie()"></div>
+
+<br /><br />
+<span id="picZ" onclick="picZ()" style="color:red;font-size:+122%; border: 1px solid red;">pic(Z)</span>
+
+<span id="prepShows" style="color:red;font-size:+122%; border: 2px solid red;">
+<select name="moreURLs" style="color:#f11" onChange="newURL(this);">
+
+<option value="" selected style="color:#11f">---Prepared Shows</option>
+
+<option value="" style="color:#11f">--- .9: Browsing</option>
+<option value="http://i.tgu.ca/bbp-jon_wall_survey">bbp-jon_wall_suvey</option>
+
+<option value="" style="color:#11f">--- .8: random jpgs/day</option>
+<option value="http://i.tgu.ca/bbp-all_2xd">bbp-all_2xd</option>
+<option value="http://i.tgu.ca/bbp-all_5xd">bbp-all_5xd</option>
+<option value="http://i.tgu.ca/bbp-all_greg_2xd">bbp-all_greg_2xd</option>
+<option value="http://i.tgu.ca/bbp-all_jon_2xd">bbp-all_jon_2xd</option>
+<option value="http://i.tgu.ca/bbp-latest_3_days_2xd">bbp-latest_3_days_2xd</option>
+<option value="http://i.tgu.ca/">bbp-latest_month_2xd</option>
+
+<option value="" style="color:#11f">--- .7: command line reading</option>
+<option value="http://i.tgu.ca/bbp-last_3">bbp-last_3</option>
+<option value="http://i.tgu.ca/bbp-latest_3">bbp-latest_3</option>
+<option value="http://i.tgu.ca/bbp-container_day">bbp-container_day</option>
+<option value="http://i.tgu.ca/bbp-first_month">bbp-first_month</option>
+<option value="http://i.tgu.ca/bbp-latest_month">bbp-latest_month</option>
+<option value="http://i.tgu.ca/bbp-Jon">bbp-Jon</option>
+
+<option value="http://db.tgu.ca/bright/pics/index.html" style="color:#11f">--- plain build pic interface</option>
+</select></span>
+<br />
+
+<div id="divpics"></div>
+
+</body></html>

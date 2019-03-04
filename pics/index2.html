@@ -1,0 +1,292 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><title>BST Building Pics</title>
+<style>
+img.web {
+	border: 2px dashed green;
+	border-width: 4px 2px;
+    -webkit-animation: mymove 2s infinite;
+    animation: mymove 2s infinite;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+}
+img.thm {
+	border-width: 4px 2px;
+	border-style: dashed;
+	border-color: lightgray;
+    -webkit-animation: mymove 2s infinite;
+    animation: mymove 2s infinite;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+}
+@-webkit-keyframes mymove { /* Cr, Saf, Op*/
+    10% {border-width: 4px 22px;
+	border-color: red; }	}
+@keyframes mymove { /* Standard syntax */
+    10% {border-width: 4px 22px;
+	border-color: red; }
+
+</style>
+<script type="text/javascript"> //	init vars
+picsz=233;
+dwell=300;
+movieon=false;
+//	init FNs
+function Clearpics(){
+	var movc = document.getElementsByClassName('web'), options={};
+	for(pic=movc.length;0<pic;pic--)
+		simulatedClick(movc[pic-1],'click');
+}
+function loadall(){
+	for(i=0;i<directory.length;i++)
+		simulatedClick(directory[i],'click');
+}
+function movieweb(){
+	if(movieon==false){
+		divmovie.style.height="0px";
+		imgmovie.src="";
+		return;	};
+movc = document.getElementsByClassName('web');
+	if(1>movc.length)return;
+	divmovie.style.height=picsz+"px";
+	imgmovie.style.height=picsz+"px";
+	var mov=[];
+	for(i=0;i<movc.length;i++) mov.push(movc[i].src);
+//movid=document.getElementById('movid');
+	movl=1;
+	for(imov=mov.length; 0<imov; imov--) {
+		setTimeout(function(){
+			imgmovie.src=mov[movl==mov.length?0:movl++];
+		}, dwell*imov);
+	}
+	setTimeout(function(){ movieweb()	//Repeat infinitely
+		}, dwell*(mov.length+1));
+}
+function keys(e){
+	tw=parseInt(thmsid.style.width);
+	th=parseInt(thmsid.style.height);
+	switch (e.keyCode) {
+	case 37: // < left
+		thmsid.style.width=(tw-10)+"px";
+	break; case 38: // ^ up
+		thmsid.style.height=(th-10)+"px";
+	break; case 39: // > right
+		thmsid.style.width=(tw+10)+"px";
+	break; case 40: //v down
+		thmsid.style.height=(th+10)+"px";
+	break; case 67: // (C)lear pics
+		Clearpics();
+	break; case 65: // (A)ll pics
+		loadall();
+	break; case 77: // (M)ovie
+		movieon=!movieon;	movieweb();
+	break; case 27: // Escape: Stop movie
+		movieon=false;
+break;	}	}
+function dragst(evt){ // Thumb box
+	evtthms=evt;
+	dsx=evt.ondragstart.arguments[0].clientX;
+	dsy=evt.ondragstart.arguments[0].clientY;
+	dsw=evt.offsetWidth;
+	dsh=evt.offsetHeight;
+}
+function drag(evt){
+	ddx=evt.ondrag.arguments[0].clientX;
+	ddy=evt.ondrag.arguments[0].clientY;
+	if(ddy==0 || ddx==0)return;
+	deh=evt.style.height=parseInt(dsh*(ddy/dsy))+'px';
+	dew=evt.style.width =parseInt(dsw*(ddx/dsx))+'px';
+}
+function dwellt(e){dwell=parseInt(e.value);}
+function webHt(e){
+	picsz=parseInt(e.value);
+	if(picsz<0)	{picsz*=-1;	//if neg do all
+		webs = document.getElementsByClassName("web");
+		for(i=0;i<webs.length;i++) webs[i].height=picsz;
+}	}
+function thmHt(e){
+	thmsz=parseInt(e.value);
+	thms = document.getElementsByClassName("thm");
+	for(i=0;i<thms.length;i++) thms[i].height=thmsz;
+}
+function simulatedClick(target, options) {
+// http://stackoverflow.com/questions/6157929/how-to-simulate-mouse-click-using-javascript (Ans #2)
+	var event = target.ownerDocument.createEvent('MouseEvents'), options = options || {};
+	var opts = { //Set default options to right of ||
+		type: options.type	|| 'click',
+		canBubble:options.canBubble	|| true,
+		cancelable:options.cancelable	|| true,
+		view:options.view	|| target.ownerDocument.defaultView, 
+		detail:options.detail	|| 1,
+		screenX:options.screenX	|| 0, //The coord w/in the entire page
+		screenY:options.screenY	|| 0,
+		clientX:options.clientX	|| 0, //The coord w/in the viewport
+		clientY:options.clientY	|| 0,
+		ctrlKey:options.ctrlKey	|| false,
+		altKey:options.altKey	|| false,
+		shiftKey:options.shiftKey	|| false,
+		metaKey:options.metaKey	|| false,
+		button:options.button	|| 0, //0=left, 1=middle, 2=right
+		relatedTarget:options.relatedTarget	|| null,
+	}
+	//Pass in the options
+	event.initMouseEvent(
+		opts.type,
+		opts.canBubble,
+		opts.cancelable,
+		opts.view, 
+		opts.detail,
+		opts.screenX,
+		opts.screenY,
+		opts.clientX,
+		opts.clientY,
+		opts.ctrlKey,
+		opts.altKey,
+		opts.shiftKey,
+		opts.metaKey,
+		opts.button,
+		opts.relatedTarget
+	);
+	target.dispatchEvent(event);    //Fire the event
+}
+function loaded(){ // init page
+	directory= document.getElementsByClassName('directory');
+	divpics=document.getElementById('divpics');
+	divmovie=document.getElementById('divmovie');
+	imgmovie=document.getElementById('imgmovie');
+	y=document.getElementById("thms");
+	if(null==y)return;
+	thmsid=y;
+	aij='';
+for(i=0;i<dirs.length;i++){
+	aij+="<br><b class='directory' style='color:blue'  onclick='webdir("+i+")'>"+dirs[i]+"</b><br>";
+	for(j=0; j<imgs[dirs[i]].length; j++){
+		var nij=imgs[dirs[i]][j];
+		aij+='<img id="t'+nij
+			+'" alt="t'+nij
+			+'" class="thm"'
+			+'" active="false"'
+			+' onClick="webit(this)" src="'
+			+dirs[i]+'/thm/'
+			+nij	+'" \>'
+}	}
+y.innerHTML=aij;
+}
+function webdir(diri){
+	diri=dirs[diri];
+	for(j=0; j<imgs[diri].length; j++) {
+		var tij=imgs[diri][j];
+		tij=document.getElementById('t'+tij);
+		if(null==tij)return;
+		webit(tij);
+}	}
+</script>
+<script type="text/javascript">//webit
+function webit(thumb){
+	thumb.style.borderColor="red";
+	var webialt=thumb.id.replace("t", "");
+	var webiid = "w"+webialt;
+	if(thumb.active){
+		thumb.active=false;
+		thumb.style.borderColor="lightgray";
+		webi=document.getElementById(webiid);
+		if(null==webi)return;
+		webi.parentNode.removeChild(webi);
+		return; }
+	thumb.active=true;
+	webi = document.createElement("img");
+	webi.alt=webialt;
+	webi.id = webiid;
+	thumb.addEventListener("mouseover", function(e){
+		myid=this.id;
+		webid=myid.replace("t", "w");
+		web=document.getElementById(webid);
+		if(null==web)return;
+		e.preventDefault;
+		web.classList.remove("web");
+		web.offsetWidth = web.offsetWidth;
+		web.classList.add("web");
+	}, false);
+	webi.className = "web";
+	webi.src= thumb.src.replace("thm","web");
+	webi.height=picsz;
+	webi.addEventListener("click",function(e){
+		myid=this.id;
+		thmid=myid.replace("w", "t");
+		thumb=document.getElementById(thmid);
+		if(null==thumb)return;
+		thumb.active=false;
+		thumb.style.borderColor="lightgray";
+		this.parentNode.removeChild(this);
+	}, false);
+	webi.addEventListener("mouseover", function(e){
+		myid=this.id;
+		thmid=myid.replace("w", "t");
+		thumb=document.getElementById(thmid);
+		if(null==thumb)return;
+//http://css-tricks.com/restart-css-animation/
+		e.preventDefault;
+		thumb.classList.remove("thm");
+		thumb.offsetWidth = thumb.offsetWidth;
+		thumb.classList.add("thm");
+	}, false);
+	divpics.appendChild(webi);
+}
+</script>
+<script type="text/javascript" src="./weblist.js"></script>
+<script type="text/javascript">//imgs
+imgs=[];
+for(i=0;i<dirs.length;i++){ // load src's as js's
+	var js = document.createElement("script");
+	js.type = "text/javascript";
+	js.src = dirs[i]+"/imgs.js";
+	document.head.appendChild(js);
+}
+</script>
+
+</head><body onload="loaded()"
+	onkeydown="keys(event)"
+	style="text-align: center; margin:0 auto;">
+
+	<div id="thms"
+style="height:400px;width:800px;overflow:scroll;
+margin:0 auto;"
+draggable="true" ondragstart="dragst(this)"
+ondrag="drag(this)"
+></div>
+
+<div id="text"
+style="height:25px;width:800px;margin:0 auto;">
+thmsz=
+<input size="3" id="thmszid" name="thmsz" type="text" value="33"
+style="background: pink;" onchange='thmHt(this)' />
+
+picsz=
+<input size="3" id="picszid" name="picsz" type="text" value="233"
+style="background: pink;" onchange='webHt(this)' />
+(neg value sets height for old)
+<b onclick="loadall()" id="allmovid" style="border: 2px solid pink;background:lightcyan">ALL?</b>
+
+<b onclick="movieon=!movieon;movieweb()" id="movid" style="border: 2px solid pink;background:lightcyan">Movie?:</b>
+
+dwell=
+<input size="3" id="dwellid" name="dwell" type="text" value="300"
+style="background: pink;" onchange='dwellt(this)' />ms
+<b onclick="Clearpics()" id="ClearPics" style="border: 2px solid pink;background:lightcyan">ClearPics</b>
+
+<h2>Pics showing build progress @
+<a href="http://i.tgu.ca/bright_plan_f">Bright St Trust</a>
+(4323 5th NW, Seattle)</h2>
+To change size/shape of thumb Box <b>drag</b> [Starting on <b>white space</b>] within it.
+<br />(If that does not work the arrow keys should do it)
+<br />Clicks (and mouseovers) just work for thumbs AND for pics...(play)...
+<br />
+<b>Keys</b>: Arrows (<b>&lt;^v&gt;</b>), (<b>M</b>)ovie and <b>Esc</b> (ending movie))
+</div>
+
+<div id="divmovie"
+style="height:100px"><img id="imgmovie" onclick="movieon=!movieon"></div>
+
+<div id="divpics"></div>
+<br />
+
+</body></html>

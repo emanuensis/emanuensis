@@ -1,0 +1,41 @@
+<!DOCTYPE html><html><head><script>
+function readday(d){
+//	dv=d.value;
+//	document.getElementById("myDiv").innerText+='\n'+i+' ('+dv+')';
+}
+function loadXMLDoc(){
+  xmlhttp=new XMLHttpRequest();
+  xmlhttp.onreadystatechange=function()  {
+    if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+		r=xmlhttp.responseText;
+//		r=r.replace(/oXX.*/g,'XHRe');
+document.getElementById("myDiv").innerText+='\n'+dv+' ('+r+')';
+//document.getElementById("myDiv").innerHTML+='<br />'+i+' ('+r+')';
+	}
+}
+	addid=document.getElementById('addy');
+	dv=addid.value;
+xmlhttp.open("GET",dv,true);
+//xmlhttp.open("GET","14/07/140721/imgs.json",true);
+//xmlhttp.open("GET","copy.xmp",true);
+// //xmlhttp.open("GET","index.html",true);
+//xmlhttp.open("GET","x3.html",true);
+xmlhttp.send();
+}
+</script>
+</head><body onload="i=0"><a href="
+http://www.w3schools.com/dom/tryit.asp?filename=try_dom_xmlhttprequest_first">w3s try xmlhttprequest</a>
+<h2>Using the XMLHttpRequest object</h2>
+<button type="button" onclick="loadXMLDoc()">Change Content</button>
+
+<input id="addy" name="thmsz" type="text" value="14/07/140720/imgs.json"
+style="background: #cfc; width:12em" onchange='readday(this)' />
+
+<div id="myDiv"></div>
+
+</body></html>
+<!--
+mongoose
+http://192.168.0.104:8080/emanuensis/Dropbox/Public/bright/pics/xhr.html
+send open responseText status XMLHttpRequest
+-->

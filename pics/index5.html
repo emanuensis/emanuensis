@@ -1,0 +1,367 @@
+<!doctype html><html><head><title>BST Building Pics</title>
+<style>
+b.eon	{
+	font-size:105%;
+	color:green;	}
+b.eoff	{
+	font-size:120%;
+	color:red;	}
+img.web {
+	border: 2px dashed green;
+	border-width: 4px 2px;
+    -webkit-animation: mymove 2s infinite;
+    animation: mymove 2s infinite;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+}
+img.thm {
+	border-width: 4px 2px;
+	border-style: dashed;
+	border-color: lightgray;
+    -webkit-animation: mymove 2s infinite;
+    animation: mymove 2s infinite;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+}
+@-webkit-keyframes mymove { /* Cr, Saf, Op*/
+    10% {border-width: 4px 22px;
+	border-color: red; }
+@keyframes mymove { /* Standard syntax */
+    10% {border-width: 4px 22px;
+	border-color: red; }
+</style>
+<script type="text/javascript"> //	init vars
+month="Thumbnails by Build Month ";
+months=["JAN:","FEB:","MAR:","APR:","MAY:","JUN:","JUL:","AUG:","SEP:","OCT:","NOV:","DEC:"];
+officon="&#x21BB; &nbsp;";	//roll up [vs &ntri; = #x022EB]
+onicon ="&#x21B7; &nbsp;";	//roll on [vs &nabla;]
+eoff=" class='eoff' onclick='offon(this)'> "+officon+"</b>";	// &ntri; = #x022EB [#x21BB]
+eon=" class='eon' onclick='onoff(this)'> "+onicon+"</b>";
+picsz=444;
+dwell=700;
+movieon=false;
+//	init FNs
+function monthv(d){
+	re=/.*\/(\d+)\/\d+$/
+	m=d.replace(re,"$1");
+	m=months[parseInt(m)-1];
+//	console.log(d+", "+m);
+	return(m);
+}
+function allonoff(){
+	for(i=0;i<dirs.length;i++){
+		qi=document.getElementById('q'+dirs[i]);
+		simulatedClick(qi,'click');
+}	}
+function offon(e){	//of thumb file display
+	tid=e.id.replace("q","t");
+	tide=document.getElementById(tid);
+	if(typeof tide.nf==='undefined')tide.nf=true;
+	tide.style.display=tide.nf?'none':'inline';
+	e.innerHTML=tide.nf?onicon:officon;
+	e.classList.remove(tide.nf?"eoff":"eon");
+	tide.nf=!tide.nf;
+	e.className=tide.nf?"eoff":"eon";
+}
+function Clearpics(){
+	var movc = document.getElementsByClassName('web'), options={};
+	for(pic=movc.length;0<pic;pic--)
+		simulatedClick(movc[pic-1],'click');
+}
+function loadall(){
+	for(i=0;i<directory.length;i++)
+		simulatedClick(directory[i],'click');
+}
+function movieweb(){
+	bodid.style.background='#444';//'dimgray';
+	if(movieon==false){
+		divmovie.style.height="0px";
+		imgmovie.src="";
+		bodid.style.background='white';
+		return;	};
+movc = document.getElementsByClassName('web');
+	if(1>movc.length)return;
+	divmovie.style.height=picsz+"px";
+	imgmovie.style.height=picsz+"px";
+	var mov=[];
+	for(i=0;i<movc.length;i++) mov.push(movc[i].src);
+//movid=document.getElementById('movid');
+	movl=1;
+	for(imov=mov.length; 0<imov; imov--) {
+		setTimeout(function(){
+			imgmovie.src=mov[movl==mov.length?0:movl++];
+		}, dwell*imov);
+	}
+	setTimeout(function(){ movieweb()	//Repeat infinitely
+		}, dwell*(mov.length+1));
+}
+function keys(e,kbsim){
+	tw=parseInt(thmsid.style.width);
+	th=parseInt(thmsid.style.height);
+	switch (kbsim?e:e.keyCode) {
+	case 37: // < left
+		thmsid.style.width=(tw-10)+"px";
+	break; case 38: // ^ up
+		thmsid.style.height=(th-10)+"px";
+	break; case 39: // > right
+		thmsid.style.width=(tw+10)+"px";
+	break; case 40: //v down
+		thmsid.style.height=(th+10)+"px";
+	break; case 67: // (C)lear pics
+		Clearpics();
+	break; case 65: // (A)ll pics
+		loadall();
+	break; case 77: // (M)ovie start/stop
+		movieon=!movieon;	movieweb();
+	break; case 82: // un(R)oll/up all thms
+		allonoff();
+	break; case 27: // Escape: Stop movie
+		movieon=false;
+break;	}	}
+function dragst(evt){ // Thumb box
+//	evtthms=evt;
+// 	dsx=evt.ondragstart.arguments[0].clientX;
+// 	dsy=evt.ondragstart.arguments[0].clientY;
+// 	dsw=evt.offsetWidth;
+// 	dsh=evt.offsetHeight;
+	dsx=evt.onmouse.arguments[0].clientX;
+	dsy=evt.onmouse.arguments[0].clientY;
+	dsw=evt.offsetWidth;
+	dsh=evt.offsetHeight;
+}
+function drag(evt){
+	ddx=evt.ondrag.arguments[0].clientX;
+	ddy=evt.ondrag.arguments[0].clientY;
+	if(ddy==0 || ddx==0)return;
+	deh=evt.style.height=parseInt(dsh*(ddy/dsy))+'px';
+	dew=evt.style.width =parseInt(dsw*(ddx/dsx))+'px';
+}
+function dwellt(e){dwell=parseInt(e.value);}
+function webHt(e){
+	picsz=parseInt(e.value);
+	if(picsz<0)	{picsz*=-1;	//if neg do all
+		webs = document.getElementsByClassName("web");
+		for(i=0;i<webs.length;i++) webs[i].height=picsz;
+}	}
+function thmHt(e){
+	thmsz=parseInt(e.value);
+	thms = document.getElementsByClassName("thm");
+	for(i=0;i<thms.length;i++) thms[i].height=thmsz;
+}
+function simulatedClick(target, options) {
+// http://stackoverflow.com/questions/6157929/how-to-simulate-mouse-click-using-javascript (Ans #2)
+	var event = target.ownerDocument.createEvent('MouseEvents'), options = options || {};
+	var opts = { //Set default options to right of ||
+		type: options.type	|| 'click',
+		canBubble:options.canBubble	|| true,
+		cancelable:options.cancelable	|| true,
+		view:options.view	|| target.ownerDocument.defaultView, 
+		detail:options.detail	|| 1,
+		screenX:options.screenX	|| 0, //The coord w/in the entire page
+		screenY:options.screenY	|| 0,
+		clientX:options.clientX	|| 0, //The coord w/in the viewport
+		clientY:options.clientY	|| 0,
+		ctrlKey:options.ctrlKey	|| false,
+		altKey:options.altKey	|| false,
+		shiftKey:options.shiftKey	|| false,
+		metaKey:options.metaKey	|| false,
+		button:options.button	|| 0, //0=left, 1=middle, 2=right
+		relatedTarget:options.relatedTarget	|| null,
+	}
+	//Pass in the options
+	event.initMouseEvent(
+		opts.type,
+		opts.canBubble,
+		opts.cancelable,
+		opts.view, 
+		opts.detail,
+		opts.screenX,
+		opts.screenY,
+		opts.clientX,
+		opts.clientY,
+		opts.ctrlKey,
+		opts.altKey,
+		opts.shiftKey,
+		opts.metaKey,
+		opts.button,
+		opts.relatedTarget
+	);
+	target.dispatchEvent(event);    //Fire the event
+}
+function loaded(){ // init page
+	bodid=document.getElementById('bod');
+	thmsz=parseInt(document.getElementById('thmszid').value);
+	directory= document.getElementsByClassName('directory');
+	divpics=document.getElementById('divpics');
+	divmovie=document.getElementById('divmovie');
+	imgmovie=document.getElementById('imgmovie');
+	y=document.getElementById("thms");
+	if(null==y)return;
+	thmsid=y;
+	aij=month;
+for(i=0;i<dirs.length;i++){
+	mnth=monthv(dirs[i]);
+	if(mnth!=month){
+		month=mnth;
+		aij+="<br />"+month+" ";	}
+	aij+="<brXXX><b class='directory'"
+		+" style='color:blue'"
+		+" onclick='webdir("+i+")'>"+dirs[i]+"</b>"
+		+"<b id='q"+dirs[i]+"'"+eoff
+		+"<div id='t"+dirs[i]+"'>";
+	for(j=0; j<imgs[dirs[i]].length; j++){
+		var nij=imgs[dirs[i]][j];
+		aij+='<img id="t'+nij
+			+'" title="t'+nij
+			+'" class="thm"'
+			+'" height="'+thmsz
+			+'" active="false"'
+			+' onClick="webit(this)" src="'
+			+dirs[i]+'/thm/'
+			+nij	+'">';
+		}
+	aij+="</div>";
+}
+y.innerHTML=aij;
+	setTimeout(function(){ allonoff()
+		}, 1255);
+}
+function webdir(diri){
+	diri=dirs[diri];
+	for(j=0; j<imgs[diri].length; j++) {
+		var tij=imgs[diri][j];
+		tij=document.getElementById('t'+tij);
+		if(null==tij)return;
+		webit(tij);
+}	}
+</script>
+<script type="text/javascript">//webit
+function webit(thumb){
+	thumb.style.borderColor="red";
+	var webialt=thumb.id.replace("t", "");
+	var webiid = "w"+webialt;
+	if(thumb.active){
+		thumb.active=false;
+		thumb.style.borderColor="lightgray";
+		webi=document.getElementById(webiid);
+		if(null==webi)return;
+		webi.parentNode.removeChild(webi);
+		return; }
+	thumb.active=true;
+	webi = document.createElement("img");
+	webi.title=webialt;
+	webi.alt=webialt;
+	webi.id = webiid;
+	thumb.addEventListener("mouseover", function(e){
+		myid=this.id;
+		webid=myid.replace("t", "w");
+		web=document.getElementById(webid);
+		if(null==web)return;
+		e.preventDefault;
+		web.classList.remove("web");
+		web.offsetWidth = web.offsetWidth;
+		web.classList.add("web");
+	}, false);
+	webi.className = "web";
+	webi.src= thumb.src.replace("thm","web");
+	webi.height=picsz;
+	webi.addEventListener("click",function(e){
+		myid=this.id;
+		thmid=myid.replace("w", "t");
+		thumb=document.getElementById(thmid);
+		if(null==thumb)return;
+		thumb.active=false;
+		thumb.style.borderColor="lightgray";
+		this.parentNode.removeChild(this);
+	}, false);
+	webi.addEventListener("mouseover", function(e){
+		myid=this.id;
+		thmid=myid.replace("w", "t");
+		thumb=document.getElementById(thmid);
+		if(null==thumb)return;
+//http://css-tricks.com/restart-css-animation/
+		e.preventDefault;
+		thumb.classList.remove("thm");
+		thumb.offsetWidth = thumb.offsetWidth;
+		thumb.classList.add("thm");
+	}, false);
+//	divpics.appendChild(webi);	// append, prepend:
+	divpics.insertBefore(webi,divpics.firstChild);
+}
+</script>
+<script type="text/javascript" src="./weblist.js"></script>
+<script type="text/javascript">//imgs
+imgs=[];
+for(i=0;i<dirs.length;i++){ // load src's as js's
+	var js = document.createElement("script");
+	js.type = "text/javascript";
+	js.src = dirs[i]+"/imgs.js";
+	document.head.appendChild(js);
+}
+</script>
+
+</head><body id='bod' onload="loaded()"
+	onkeydown="keys(event,false)"
+	style="text-align: center; margin:0 auto;background: #fff;">
+
+	<div id="thms"
+style="height:200px;width:800px;overflow:scroll;
+margin:0 auto;"
+draggable="true" onclick="dragst(this)"
+onmousemove="drag(this)"
+></div>
+<<!--
+	<div id="thms"
+style="height:200px;width:800px;overflow:scroll;
+margin:0 auto;"
+draggable="true" ondragstart="dragst(this)"
+ondrag="drag(this)"
+></div>
+-->
+<div id="text"
+style="height:25px;width:950px;margin:0 auto;">
+
+<b onclick="keys(37,true)" style="font-size:+122%;border: 2px solid pink;background:lightcyan">&lt;</b>,
+<b onclick="keys(39,true)" style="font-size:+122%;border: 2px solid pink;background:lightcyan">&gt;</b>
+thmBox
+<b onclick="keys(38,true)" style="font-size:+122%;border: 2px solid pink;background:lightcyan">^</b>,
+<b onclick="keys(40,true)" style="font-size:+122%;border: 2px solid pink;background:lightcyan">v</b>
+
+<b onclick="allonoff();" size="3" id="allonoff" style="border: 2px solid pink;background:lightcyan">
+&#x21BB;/<i style="color:red">R</i>oll/&#x21B7;</b>
+size:
+<input id="thmszid" name="thmsz" type="text" value="77"
+style="background: pink; width:2em" onchange='thmHt(this)' />
+
+PICsz:
+<input size="3" id="picszid" name="picsz" type="text" value="444"
+style="background: pink; width:2em" onchange='webHt(this)' />
+(negative: all)
+<b onclick="loadall()" id="allmovid" style="border: 2px solid pink;background:lightcyan"><i style="color:red">A</i>LL?</b>
+
+<b onclick="movieon=!movieon;movieweb()" id="movid" style="border: 2px solid pink;background:lightcyan"><i style="color:red">M</i>ovie?:</b>
+
+dwell=
+<input size="3" id="dwellid" name="dwell" type="text" value=700
+style="background: pink; width:3em" onchange='dwellt(this)' />ms
+<b onclick="Clearpics()" id="ClearPics" style="border: 2px solid pink;background:lightcyan"><i style="color:red">C</i>learPics</b>
+
+<h2>Pics showing build progress @
+<a href="http://i.tgu.ca/bright_plan_f">Bright St Trust</a>
+(4323 5th NW, Seattle)</h2>
+To change size/shape of thumb Box use arrow keys
+<br />Clicks (and mouseovers) just work for thumbs AND for pics...(play)...
+<br />Click on a date or a thumbnail to (re)move it (from)to the selection
+<br />Click on a <b class='eon'>&#x21B7;</b> to show thumbs for that date
+<br />
+<b style="color:#f33">Keys</b>: Arrows (<b style="font-size:+122%">&lt;^v&gt;</b>) resize thumbbox,
+(<b>R</b>)oll up/down <b>all</b> thumbs
+<br />(<b>M</b>)ovie and <b>Esc</b> (end movie),
+show (<b>A</b>)ll  pics, (<b>C</b>)lear all pics
+</div>
+
+<div id="divmovie"
+style="height:100px"><img id="imgmovie" onclick="movieon=!movieon"></div>
+<div id="divpics"></div>
+
+</body></html>
